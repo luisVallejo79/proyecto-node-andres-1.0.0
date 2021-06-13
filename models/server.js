@@ -13,6 +13,7 @@ class Server {
         this.authPath = '/auth'
         this.cargosPath = '/cargos'
         this.usuariosPath = '/usuarios'
+        this.especialidadPath = '/especialidad'
         
 
         //conectar a bd
@@ -43,6 +44,7 @@ class Server {
         this.app.use(this.authPath, require('../routes/auth'));
         this.app.use(this.cargosPath, require('../routes/cargos'));
         this.app.use(this.usuariosPath, require('../routes/usuarios'));
+        this.app.use(this.especialidadPath, require('../routes/especialidad'));
        
         
        

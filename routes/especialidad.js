@@ -1,13 +1,13 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-vampos');
-/* const { cargoExiste } = require('../helpers/db-validators'); */
+
 
 const { obtenerEspecialidad,
         obtenerEspecialidades,
         crearEspecialidad,
         actualizarEspecialidad,
-        borrarEspecialidad } = require('../controllers/cargo');
+        borrarEspecialidad } = require('../controllers/especialidad');
 
 
 
