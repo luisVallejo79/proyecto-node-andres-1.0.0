@@ -30,48 +30,37 @@ const obtenerCargos = async( req, res = response )=>{
 const crearCargo = async(req, res = response ) => {
 
     const nombreCargo = req.body.nombre.toUpperCase();
+    const estado = req.body.estado;
 
-    try {
-        // Generar la data a guardar
-    const data = { nombreCargo }
+    const cargo = new Cargo({nombreCargo, estado });
 
-    const cargo = new Cargo ( data );
-
-    // Guardar DB
+    //guardar en db
     await cargo.save();
-
-    res.status(201).json(cargo);
-
-    } catch (error) {
-         res.json( ' Error al guardar nuevo cargo en la base de datos, verifique la informacion ');
-        
-    }
-
-/*     const cargoDB = await Cargo.findOne({ nombre });
-
-    if ( cargoDB ) {
-        return res.status(400).json({
-            msg: `El cargo ${ cargoDB.nombre }, ya existe`
-        });
-    } */
-
-   
-
-}
-
-const actualizarCargo = ( req, res = response )=>{
+ 
     res.json({
-        msg : " PUT - Respondiendo desde controlador"
+        cargo
     });
+    
+
 }
 
-const borrarCargo = ( req, res = response )=>{
-    res.json({
-        msg : " DELETE - Respondiendo desde controlador"
-    });
+const actualizarCargo = async ( req, res = response )=>{
+    const { id } = req.params;
+    const { _id, estado, ...resto } = req.body;
+
+    const cargo = await Cargo.findByIdAndUpdate( id, resto );
+
+    res.json(cargo);
 }
 
+const borrarCargo = async( req, res = response )=>{
 
+    const { id } = req.params;
+    const cargo = await Cargo.findByIdAndUpdate( id, { estado: false } );
+
+    res.json(cargo);
+    
+}
 
 module.exports = {
     obtenerCargo,

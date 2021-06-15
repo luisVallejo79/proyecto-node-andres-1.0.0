@@ -13,4 +13,10 @@ const EspecialidadSchema = Schema({
     },
 });
 
+EspecialidadSchema.methods.toJSON = function() {
+    const { __v, estado, ...data  } = this.toObject();
+    return data;
+}
+
+
 module.exports = model( 'Especialidad', EspecialidadSchema );

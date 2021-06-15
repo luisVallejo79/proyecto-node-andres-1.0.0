@@ -1,13 +1,34 @@
 const Cargo = require('../models/cargo');
 const Usuario = require('../models/usuario');
+const Especialidad = require('../models/especialidad');
 
 
 
-const cargoExiste = async( cargo ) => {
 
-const existeCargo = await Cargo.findOne({ cargo });
+
+const especialidadExiste = async( especialidad ) => {
+
+    const existeEspecialidad = await Especialidad.findOne({ especialidad });
+        if ( existeEspecialidad ) {
+            throw new Error(`El cargo ${ especialidad } ya esta registrado en la BD`);
+        }
+    }
+
+const existeEspecialidadPorId = async( id ) => {
+
+    // Verificar si la especialidad existe
+    const especialidad = await Especialidad.findById( id );
+    if ( !especialidad ) {
+        throw new Error(`No existe especialidad con el Id ${ id }` );
+    }
+}
+
+
+const cargoExiste = async( nombreCargo ) => {
+
+    const existeCargo = await Cargo.findOne({ nombreCargo });
     if ( existeCargo ) {
-        throw new Error(`El cargo ${ cargo } ya esta registrado en la BD`);
+        throw new Error(`El cargo ${ nombreCargo } ya esta registrado en la BD`);
     }
 }
 const esCargoValido = async(nombreCargo = '') => {
@@ -17,6 +38,15 @@ const esCargoValido = async(nombreCargo = '') => {
         throw new Error(`El cargo ${ nombreCargo } no está registrado en la BD`);
     }
 }
+const existeCargoPorId = async( id ) => {
+
+    // Verificar si el cargo existe
+    const existeCargoId = await Cargo.findById(id);
+    if ( !existeCargoId ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
+
 
 const emailExiste = async( correo = '' ) => {
 
@@ -62,11 +92,15 @@ const existeProductoPorId = async( id ) => {
 
 
 module.exports = {
+    especialidadExiste,
+    existeEspecialidadPorId,
     cargoExiste,
     esCargoValido,
     emailExiste,
     existeUsuarioPorId,
     existeCategoriaPorId,
-    existeProductoPorId
+    existeProductoPorId,
+    existeCargoPorId
 }
 
+ 
