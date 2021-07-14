@@ -1,10 +1,59 @@
 const Cargo = require('../models/cargo');
 const Usuario = require('../models/usuario');
 const Especialidad = require('../models/especialidad');
+const AsignarTarea = require('../models/asignarTarea');
+const { response } = require('express');
 
 
 
+const validarIdArray = async( req, res = response )=>{
+    
+    
+    const {responsable} = req.body;
+    
+    let logintudArray = responsable.length
+    console.log(logintudArray);
+    
+    responsable.forEach(element => {
+        console.log(element);
+        console.log('****************');
 
+        const responsableId = AsignarTarea.findOne( element );
+        if(!responsableId){
+            console.log(`Usuario ${element} no encontrado`)
+        }
+        //validar que exista el Identificacion
+    });
+      
+    /* 
+    const estado = req.body.estado;
+
+    const especialidad = new Especialidad({nombre, estado});
+    const { id } = req.params;
+    const cargo = await Cargo.findById( id );
+                            /* .populate('usuario', 'nombre');  */
+
+    res.json( responsable);
+    
+}
+
+const isMongoIdValido = async( req, res = response )=>{
+
+    const body = req.body;
+   /* c onst especialidad = await Especialidad.findById( id ); */
+                            /* .populate('usuario', 'nombre'); */
+
+    res.json( body );
+      
+   
+}
+/* const isMongoIdValido = async( [responsable]) => {
+
+    const mongoId = await responsable.check().isMongoId();
+    if ( !mongoId ) {
+        throw new Error(`Id no valido`);
+    }
+} */
 
 const especialidadExiste = async( especialidad ) => {
 
@@ -31,6 +80,7 @@ const cargoExiste = async( nombreCargo ) => {
         throw new Error(`El cargo ${ nombreCargo } ya esta registrado en la BD`);
     }
 }
+
 const esCargoValido = async(nombreCargo = '') => {
 
     const existeCargo = await Cargo.findOne({ nombreCargo });
@@ -91,6 +141,8 @@ const existeProductoPorId = async( id ) => {
 }
 
 
+
+
 module.exports = {
     especialidadExiste,
     existeEspecialidadPorId,
@@ -100,7 +152,9 @@ module.exports = {
     existeUsuarioPorId,
     existeCategoriaPorId,
     existeProductoPorId,
-    existeCargoPorId
+    existeCargoPorId,
+    isMongoIdValido,
+    validarIdArray
 }
 
  

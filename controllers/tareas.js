@@ -41,8 +41,7 @@ const crearTarea = async(req, res = response ) => {
     const tarea = new Tarea(body) 
     
     
-    const tareaDB = await Tarea.findOne({nombre : body.nombre })
-                    .populate('especialidad', 'nombre');
+    const tareaDB = await Tarea.findOne({nombre : body.nombre });
 
     if(tareaDB){
         return res.status(400).json({
@@ -78,6 +77,13 @@ const borrarTarea = async( req, res = response )=>{
 
     res.json(tarea);
 } 
+
+const asignarTarea = ( idAsigna, idAsignado, idTarea )=>{
+    
+    
+}
+
+
 
 module.exports = {
         crearTarea,

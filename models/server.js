@@ -15,6 +15,8 @@ class Server {
         this.usuariosPath = '/usuarios'
         this.especialidadPath = '/especialidad'
         this.tareaPath = '/tareas'
+        this.asignarTareaPath = '/asignartareas'
+
         
 
         //conectar a bd
@@ -39,6 +41,8 @@ class Server {
         this.app.use(cors())
         //Lectura y parseo del body
         this.app.use( express.json());
+        // Fileupload - Carga de archivos
+
     }
     routes(){
         //utilizar middleware para llamar los paths
@@ -47,10 +51,8 @@ class Server {
         this.app.use(this.usuariosPath, require('../routes/usuarios'));
         this.app.use(this.especialidadPath, require('../routes/especialidad'));
         this.app.use(this.tareaPath, require('../routes/tareas'));
-       
-        
-       
-        
+        this.app.use(this.asignarTareaPath, require('../routes/asignartareas')); 
+
     }
     listen(){
         this.app.listen(process.env.PORT, () => {
